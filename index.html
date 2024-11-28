@@ -15,6 +15,7 @@
             min-height: 100vh;
             background: linear-gradient(120deg, #00bfa5, #3d5afe);
             color: white;
+            overflow: hidden;
         }
         .banner {
             text-align: center;
@@ -23,6 +24,7 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            animation: fadeIn 2s ease-in-out;
         }
         h1 {
             font-size: 3em;
@@ -34,12 +36,30 @@
             font-size: 1.2em;
             margin: 10px 0;
         }
-        .illustration {
-            margin-top: 20px;
-        }
         .illustration img {
             width: 100px;
             margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .illustration img:hover {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+        .clock {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #ffeb3b;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         @media (max-width: 768px) {
             h1 {
@@ -53,13 +73,42 @@
 </head>
 <body>
     <div class="banner">
-        <h1>Ciências: Meio Ambiente e Saúde</h1>
-        <p>Explore como cuidar do nosso planeta e promover o bem-estar de todos!</p>
+        <h1 id="banner-title">Ciências: Meio Ambiente e Saúde</h1>
+        <p id="banner-description">Explore como cuidar do nosso planeta e promover o bem-estar de todos!</p>
         <div class="illustration">
-            <img src="https://img.icons8.com/color/96/earth-planet.png" alt="Planeta Terra">
-            <img src="https://img.icons8.com/color/96/healthy-food.png" alt="Saúde e Nutrição">
-            <img src="https://img.icons8.com/color/96/recycle.png" alt="Reciclagem">
+            <img src="https://img.icons8.com/color/96/earth-planet.png" alt="Planeta Terra" onclick="changeBanner('Planeta Terra')">
+            <img src="https://img.icons8.com/color/96/healthy-food.png" alt="Saúde e Nutrição" onclick="changeBanner('Saúde e Nutrição')">
+            <img src="https://img.icons8.com/color/96/recycle.png" alt="Reciclagem" onclick="changeBanner('Reciclagem')">
         </div>
+        <div class="clock" id="clock"></div>
     </div>
+
+    <script>
+        // Relógio Dinâmico
+        function updateClock() {
+            const clockElement = document.getElementById("clock");
+            const now = new Date();
+            const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            clockElement.textContent = `Hora atual: ${time}`;
+        }
+        setInterval(updateClock, 1000);
+
+        // Alterar título e descrição ao clicar nas imagens
+        function changeBanner(topic) {
+            const title = document.getElementById("banner-title");
+            const description = document.getElementById("banner-description");
+
+            if (topic === "Planeta Terra") {
+                title.textContent = "Planeta Terra: Nosso Lar";
+                description.textContent = "Entenda a importância de preservar nosso planeta para futuras gerações.";
+            } else if (topic === "Saúde e Nutrição") {
+                title.textContent = "Saúde e Nutrição";
+                description.textContent = "Descubra como hábitos saudáveis contribuem para o bem-estar global.";
+            } else if (topic === "Reciclagem") {
+                title.textContent = "Reciclagem: Reduzir, Reutilizar e Reciclar";
+                description.textContent = "Pratique a reciclagem e faça parte da mudança para um mundo sustentável.";
+            }
+        }
+    </script>
 </body>
 </html>
